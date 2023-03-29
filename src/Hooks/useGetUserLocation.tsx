@@ -6,9 +6,7 @@ function useGetUserLocation() {
     const getCurrentLocation = async() => {
     return new Promise((resolve, reject) => {
             if(navigator.geolocation) {
-                console.log("available")
                 navigator.geolocation.getCurrentPosition((position) => {
-                    console.log(position)
                     resolve(position)
                 }, (error) => {
                     reject(error)
