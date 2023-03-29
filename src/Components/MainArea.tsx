@@ -10,11 +10,13 @@ import codes from '../Utils/weather.json'
 import GetIcon from './GetIcon';
 import API from '../Utils/API';
 import { ICityResult } from '../types';
+import CitySearch from './CitySearch';
+import useGetUserLocation from '../Hooks/useGetUserLocation';
 
 
 
 
-function RightArea() {
+function MainArea() {
 
     const {fetchData,fetchDataWithCoordinates, data,loading,error} = useFetch()
     const weatherData = data?.data?.weather
@@ -23,46 +25,35 @@ function RightArea() {
     const description = weatherDataId ? typedCodes[weatherDataId] :false
     const [city,setCity] = React.useState<string>("")
     const [results,setResults] = React.useState<ICityResult []>([])
+    const {getCurrentLocation} = useGetUserLocation()
   
     const dataItemDataPairArray = useFormatWeatherData(data)
-    const getLocation = () => {
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-              localStorage.setItem('position',JSON.stringify((position.coords)))
-              console.log(position.coords)
-              return false
-            },
-            function(error) {
-                localStorage.setItem('decision','false')
-                console.log("never")
-              return true
-            }
-          );
-    }
+
     
     useEffect(() => {
-        const decision = localStorage.getItem('decision')
-        if(!decision){
-            const decision:any = getLocation()
-            if(decision){
-                localStorage.setItem('decision','true')
-                const position = JSON.parse(localStorage.getItem('position') || '{}')
-                fetchDataWithCoordinates('/coordinates',{lat:position?.latitude,lon:position?.longitude})
-                return
-            }else{
-                const value = localStorage.getItem('city') || 'london'
-                fetchData('/city',{name:value})
-                return
-            }
+      const userLocation = async () => {
+        try {
+          const userLocation: any = await getCurrentLocation();
+          const position = {
+            lat: userLocation?.coords?.latitude,
+            lon: userLocation?.coords?.longitude,
+          };
+          localStorage.setItem("previous-location", JSON.stringify(position));
+          fetchDataWithCoordinates("/coordinates", { ...position });
+        } catch (e) {
+          const prevLocation: any = JSON.parse(
+            localStorage.getItem("previous-location") || "{}"
+          );
+          if (prevLocation?.lat && prevLocation?.lon) {
+            fetchDataWithCoordinates("/coordinates", { ...prevLocation });
+          } else {
+            const value = localStorage.getItem("city") || "london";
+            fetchData("/city", { name: value });
+          }
         }
-        if(decision === 'true'){
-            const position = JSON.parse(localStorage.getItem('position') || '{}')
-            fetchDataWithCoordinates('/coordinates',{lat:position?.latitude,lon:position?.longitude})
-        }else{
-            const value = localStorage.getItem('city') || 'london'
-            fetchData('/city',{name:value})
-        }
-    },[])
+      };
+      userLocation();
+    }, []);
     const handleCityChange = (e:any) =>{
         setCity(e.target.value)
         searchCities()
@@ -81,33 +72,8 @@ function RightArea() {
 
   return (
     <div>
-      <FormControl
-        sx={{
-          minWidth: "18.75rem",
-          mb:2,
-        }}
-      >
-        <Autocomplete
-          freeSolo
-          disableClearable
-          options={results.map((option: ICityResult) => option?.name)}
-          onInputChange={handleCityChange}
-          onChange={handleSelection}
-          sx={{ fontSize: "1.6rem",backgroundColor:"#d9d9d9",borderRadius:"0.5rem" }}
-          noOptionsText={"Data Unavailable"}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              placeholder="Search city"
-              InputProps={{
-                ...params.InputProps,
-                type: "search",
-                style: { fontSize: "1rem" },
-              }}
-            />
-          )}
-        />
-      </FormControl>
+
+      <CitySearch results={results} handleCityChange={handleCityChange} handleSelection={handleSelection}/>
       <Grid
         container
         columns={48}
@@ -115,12 +81,13 @@ function RightArea() {
       >
         <Grid item xs={48} md={48} lg={23}>
           <Box>
-            <Box sx={{ display: "flex" }}>
+            {!!data?.data?.name && 
+            (<Box sx={{ display: "flex" }}>
               <Typography variant="h3" sx={{ px: 1 }}>
                 {data?.data?.name},
               </Typography>
               <Typography variant="h3">{data?.data?.sys?.country}</Typography>
-            </Box>
+            </Box>)}
             <Box>
               <DateComponent />
             </Box>
@@ -188,5 +155,5 @@ function RightArea() {
   );
 }
 
-export default RightArea
+export default MainArea
 

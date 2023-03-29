@@ -1,7 +1,9 @@
 import React from "react";
 import { RiThunderstormsLine, RiDrizzleLine } from "react-icons/ri";
 import { WiRainWind } from "react-icons/wi";
-import { BsSnow3, BsCloudHaze, BsSun } from "react-icons/bs";
+import { BsSnow3, BsCloudHaze, BsSun,BsCloudSun } from "react-icons/bs";
+import { WiDaySunnyOvercast } from "react-icons/wi";
+
 
 const iconObject: { [key: string]: any } = {
   "2": RiThunderstormsLine,
@@ -9,7 +11,7 @@ const iconObject: { [key: string]: any } = {
   "5": WiRainWind,
   "6": BsSnow3,
   "7": BsCloudHaze,
-  "8": BsSun,
+  "8": WiDaySunnyOvercast,
 };
 
 function GetIcon({ weather }: { weather: any }) {

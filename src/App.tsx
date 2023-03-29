@@ -1,5 +1,5 @@
 import React from "react";
-import RightArea from "./Components/RightArea";
+import RightArea from "./Components/MainArea";
 import { Box } from "@mui/material";
 import { Container } from "@mui/material";
 import MuiThemeLayout from "./Layouts/MuiThemeLayout";
