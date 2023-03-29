@@ -1,7 +1,6 @@
-import { Box, Grid, Typography,Divider,Select, Autocomplete, TextField, FormControl } from '@mui/material'
+import { Box, Grid, Typography,Divider,} from '@mui/material'
 import React,{useEffect} from 'react'
 import { TbTemperatureCelsius } from "react-icons/tb";
-import { BsCloudSun } from "react-icons/bs";
 import useFetch from '../Hooks/useFetch';
 import DateComponent from './DateComponent';
 import useFormatWeatherData from '../Hooks/useFormatWeatherData';
@@ -12,6 +11,9 @@ import API from '../Utils/API';
 import { ICityResult } from '../types';
 import CitySearch from './CitySearch';
 import useGetUserLocation from '../Hooks/useGetUserLocation';
+import styles from '../App.module.css'
+
+
 
 
 
@@ -91,20 +93,24 @@ function MainArea() {
             <Box>
               <DateComponent />
             </Box>
-            <Box sx={{ mx: 2 }}>
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mx: 2 }}
+            <Box sx={{ mx: 1 }}>
+              <Grid container columns={12}
+                
               >
-                <Box>
-                  {/* <BsCloudSun style={{ fontSize: "15rem", fontWeight: "100" }} /> */}
-                  <GetIcon weather={weatherData} />
-                </Box>
+                <Grid item xs={12} sm={6} lg={6}>
+                  <Box sx={{display:"flex",alignItems:"center",height:"100%", width:"100%", justifyContent:"center"}}>
+                    {/* <BsCloudSun style={{ fontSize: "15rem", fontWeight: "100" }} /> */}
+                    <GetIcon weather={weatherData} />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={6}>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
+                    justifyContent: "center",
                     my: 5,
+                    width:"100%"
                   }}
                 >
                   <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -112,7 +118,7 @@ function MainArea() {
                       {data?.data?.main?.temp}
                     </Typography>
                     <TbTemperatureCelsius
-                      style={{ fontSize: "4rem", fontWeight: "100" }}
+                      className={styles.icon2}
                     />
                   </Box>
                   <Typography
@@ -124,7 +130,11 @@ function MainArea() {
                       "Unknown weather"}
                   </Typography>
                 </Box>
-              </Box>
+
+                </Grid>
+
+
+              </Grid>
             </Box>
           </Box>
         </Grid>
@@ -137,7 +147,7 @@ function MainArea() {
         <Grid item xs={48} md={48} lg={23}>
           <Box
             sx={{
-              display: "flex",
+              display:{xs:"none",sm:"flex"},
               justifyContent: "space-between",
               height: "100%",
               py: 5,

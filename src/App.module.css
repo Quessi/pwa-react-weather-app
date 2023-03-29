@@ -6,3 +6,23 @@
   background:linear-gradient(0deg, #2c5dcfcc,#17429C);
 }
 
+
+
+.icon {
+  font-size: 12rem;
+}
+.icon2 {
+  font-size: 4rem;
+}
+
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 900px) {
+  .icon{
+    font-size: 6rem;
+  }
+  .icon2{
+    font-size: 2rem;
+  }
+}
