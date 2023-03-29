@@ -6,7 +6,7 @@ function CitySearch({handleCityChange,handleSelection,results}:{handleCityChange
   return (
     <FormControl
     sx={{
-      minWidth: "18.75rem",
+      minWidth: "12.75rem",
       mb:2,
     }}
   >

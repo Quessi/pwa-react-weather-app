@@ -3,6 +3,8 @@ import { RiThunderstormsLine, RiDrizzleLine } from "react-icons/ri";
 import { WiRainWind } from "react-icons/wi";
 import { BsSnow3, BsCloudHaze, BsSun,BsCloudSun } from "react-icons/bs";
 import { WiDaySunnyOvercast } from "react-icons/wi";
+import styles from '../App.module.css'
+
 
 
 const iconObject: { [key: string]: any } = {
@@ -20,7 +22,7 @@ function GetIcon({ weather }: { weather: any }) {
 
   return (
     <>
-      <Icon style={{ fontSize: "12rem", fontWeight: "100" }} />
+      <Icon className={styles.icon} />
     </>
   );
 }
