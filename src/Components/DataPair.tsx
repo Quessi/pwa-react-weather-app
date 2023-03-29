@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { IDataItemPair } from "../types";
-import { IconType } from "react-icons/lib";
 import { TbTemperatureCelsius } from 'react-icons/tb'
 
 

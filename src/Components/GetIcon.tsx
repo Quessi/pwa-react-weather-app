@@ -1,7 +1,7 @@
 import React from "react";
 import { RiThunderstormsLine, RiDrizzleLine } from "react-icons/ri";
 import { WiRainWind } from "react-icons/wi";
-import { BsSnow3, BsCloudHaze, BsSun,BsCloudSun } from "react-icons/bs";
+import { BsSnow3, BsCloudHaze } from "react-icons/bs";
 import { WiDaySunnyOvercast } from "react-icons/wi";
 
 

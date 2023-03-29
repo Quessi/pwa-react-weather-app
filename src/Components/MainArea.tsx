@@ -1,7 +1,6 @@
-import { Box, Grid, Typography,Divider,Select, Autocomplete, TextField, FormControl } from '@mui/material'
+import { Box, Grid, Typography,Divider } from '@mui/material'
 import React,{useEffect} from 'react'
 import { TbTemperatureCelsius } from "react-icons/tb";
-import { BsCloudSun } from "react-icons/bs";
 import useFetch from '../Hooks/useFetch';
 import DateComponent from './DateComponent';
 import useFormatWeatherData from '../Hooks/useFormatWeatherData';
@@ -18,7 +17,7 @@ import useGetUserLocation from '../Hooks/useGetUserLocation';
 
 function MainArea() {
 
-    const {fetchData,fetchDataWithCoordinates, data,loading,error} = useFetch()
+    const {fetchData,fetchDataWithCoordinates, data} = useFetch()
     const weatherData = data?.data?.weather
     const typedCodes:{[key:string]:any} = codes as unknown as object
     const weatherDataId = weatherData?.[0]?.id ? weatherData[0].id.toString() : 0
@@ -53,6 +52,7 @@ function MainArea() {
         }
       };
       userLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const handleCityChange = (e:any) =>{
         setCity(e.target.value)
