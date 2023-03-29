@@ -19,11 +19,24 @@ function useFetch() {
       setLoading(false);
     }
   };
+  const fetchDataWithCoordinates = async (endpoint: string, params: object) => {
+    try {
+      setError(false);
+      setLoading(true);
+      const response: any = await API.get(`${endpoint}`, { params: { ...params } });
+      const { data } = response ?? response?.data;
+      setData(data);
+    } catch (error) {
+      setError(error as any);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(()=>{
 
 
   },[])
-  return { fetchData, data, loading, error };
+  return { fetchData,fetchDataWithCoordinates, data, loading, error };
 }
 
 export default useFetch;
